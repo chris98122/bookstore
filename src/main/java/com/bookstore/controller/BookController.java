@@ -16,9 +16,9 @@ public class BookController {
     private BookRepository bookrepository;
 
 
-    @GetMapping(value = "/book")//管理员获取所有用户的信息表
+    @GetMapping(value = "/book")
     public List<Book> getBooks(){
-
         return bookrepository.findAll();
     }
+
 }
