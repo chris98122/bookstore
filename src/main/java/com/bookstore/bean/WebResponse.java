@@ -11,15 +11,15 @@ import lombok.NoArgsConstructor;
 public class WebResponse {
  //   private String code;
    // private String message;
-    private Object result;
+    private String data;
 
     //public void setCode(String code){this.code = code;}
 
   //  public void setMessage(String message){this.message = message;}
 
-    public void setResult(Object result){this.result = result;}
+    public void setResult(String result){this.data = result;}
 
-    public static WebResponse success(Object result){
+    public static WebResponse success(String result){
         WebResponse w = new WebResponse();
         w.setResult(result);
         return w;

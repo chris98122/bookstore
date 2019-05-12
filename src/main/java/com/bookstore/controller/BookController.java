@@ -10,13 +10,14 @@ import java.util.Optional;
 import com.bookstore.repository.BookRepository;
 import com.bookstore.entity.Book;
 
+@CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
 public class BookController {
     @Autowired
     private BookRepository bookrepository;
 
 
-    @GetMapping(value = "/book")
+    @GetMapping(value = "/browse")
     public List<Book> getBooks(){
         return bookrepository.findAll();
     }
