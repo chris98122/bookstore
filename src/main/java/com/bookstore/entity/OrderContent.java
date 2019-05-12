@@ -1,17 +1,28 @@
 package com.bookstore.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
+
 @Entity
 public class OrderContent {
   @Id
   private long id;
-  private long oId;
   private long bId;
   private double bNum;
 
+  @ManyToOne
+  @JoinColumn(name = "oId")
+  private Book book;
+
+  public Book getBook() {
+    return book;
+  }
+
+  public void setBook(Book book) {
+    this.book = book;
+  }
 
   public long getId() {
     return id;
@@ -21,14 +32,6 @@ public class OrderContent {
     this.id = id;
   }
 
-
-  public long getOId() {
-    return oId;
-  }
-
-  public void setOId(long oId) {
-    this.oId = oId;
-  }
 
 
   public long getBId() {

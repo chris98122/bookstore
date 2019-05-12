@@ -1,10 +1,25 @@
 package com.bookstore.entity;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import java.util.Set;
+
 @Entity
 public class Orders {
   @Id
@@ -14,6 +29,17 @@ public class Orders {
   private double totPrice;
   private long isCart;
 
+  @OneToMany(cascade = { CascadeType.ALL })
+  @JoinColumn(name = "oId")
+  private Set <OrderContent> orderContent;
+
+  public Set<OrderContent> getOrderContent() {
+    return orderContent;
+  }
+
+  public void setOrderContent(Set<OrderContent> orderContent) {
+    this.orderContent = orderContent;
+  }
 
   public long getId() {
     return id;
