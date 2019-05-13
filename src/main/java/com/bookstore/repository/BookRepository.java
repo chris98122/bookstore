@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    List<Book> findAllByOrderById();
     List<Book> findAll();
 
     @Query("SELECT b from Book b")

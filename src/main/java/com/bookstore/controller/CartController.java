@@ -27,16 +27,16 @@ import javax.servlet.http.HttpSession;
 
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
-public class OrderController {
+public class CartController {
     @Autowired
     private OrdersRepository ordersrepository;
 
-    @GetMapping(value = "/orders_show")
+    @GetMapping(value = "/cart_show")
     public List<Orders> getOrders( HttpServletRequest request){
-        HttpSession session = request.getSession();
-        long userid = (long) session.getAttribute("userid");
+            HttpSession session = request.getSession();
+            long userid = (long) session.getAttribute("userid");
 
-        return ordersrepository.findByUser_IdAndIsCartIsFalse(userid);
+            return ordersrepository.findByUser_IdAndIsCartIsTrue(userid);
+        }
     }
 
-}

@@ -24,13 +24,17 @@ import java.util.Set;
 public class Orders {
   @Id
   private long id;
-  private long uId;
+
+  @ManyToOne
+  @JoinColumn(name = "u_ID")
+  private User user;
+
   private java.sql.Timestamp buydate;
   private double totPrice;
-  private long isCart;
+  private boolean isCart;
 
   @OneToMany(cascade = { CascadeType.ALL })
-  @JoinColumn(name = "oId")
+  @JoinColumn(name = "o_ID")
   private Set <OrderContent> orderContent;
 
   public Set<OrderContent> getOrderContent() {
@@ -49,15 +53,13 @@ public class Orders {
     this.id = id;
   }
 
-
-  public long getUId() {
-    return uId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUId(long uId) {
-    this.uId = uId;
+  public void setUser(User user) {
+    this.user = user;
   }
-
 
   public java.sql.Timestamp getBuydate() {
     return buydate;
@@ -76,13 +78,11 @@ public class Orders {
     this.totPrice = totPrice;
   }
 
-
-  public long getIsCart() {
+  public boolean isCart() {
     return isCart;
   }
 
-  public void setIsCart(long isCart) {
-    this.isCart = isCart;
+  public void setCart(boolean cart) {
+    isCart = cart;
   }
-
 }

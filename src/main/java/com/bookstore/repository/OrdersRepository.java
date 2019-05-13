@@ -9,6 +9,7 @@ import com.bookstore.entity.Orders;
 import java.util.List;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long>{
-    List<Orders> findByUId(long uid);
-    List<Orders> findAll();
+    List<Orders> findByUser_IdAndIsCartIsFalse(long userid);
+
+    List<Orders> findByUser_IdAndIsCartIsTrue(long userid);
 }

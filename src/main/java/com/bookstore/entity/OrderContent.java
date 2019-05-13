@@ -9,11 +9,10 @@ import java.util.Set;
 public class OrderContent {
   @Id
   private long id;
-  private long bId;
   private double bNum;
 
   @ManyToOne
-  @JoinColumn(name = "oId")
+  @JoinColumn(name = "b_ID")
   private Book book;
 
   public Book getBook() {
@@ -32,23 +31,11 @@ public class OrderContent {
     this.id = id;
   }
 
-
-
-  public long getBId() {
-    return bId;
-  }
-
-  public void setBId(long bId) {
-    this.bId = bId;
-  }
-
-
-  public double getBNum() {
+  public double getbNum() {
     return bNum;
   }
 
-  public void setBNum(double bNum) {
+  public void setbNum(double bNum) {
     this.bNum = bNum;
   }
-
 }
