@@ -1,5 +1,11 @@
 package com.bookstore.entity;
 
+ import javax.annotation.Generated;
+  import javax.persistence.CascadeType;
+  import javax.persistence.Column;
+  import javax.persistence.Entity;
+  import javax.persistence.GeneratedValue;
+ import javax.persistence.GenerationType;
 
 
 import javax.persistence.Entity;
@@ -8,12 +14,24 @@ import java.io.Serializable;
 @Entity
 public class User {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ID")
   private long id;
+
   private String name;
   private String password;
   private String email;
   private long isActive;
 
+  public User() {
+  }
+
+  public User(String name, String password, String email, long isActive) {
+    this.name = name;
+    this.password = password;
+    this.email = email;
+    this.isActive = isActive;
+  }
 
   public long getId() {
     return id;

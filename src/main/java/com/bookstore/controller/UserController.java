@@ -59,14 +59,36 @@ public class UserController {
          return " ";
      }
 
-
     @PostMapping(value = "/logout")
     public  String logout(  HttpServletRequest request)
     {
-
         request.getSession().removeAttribute("username");
         request.getSession().removeAttribute("userid");
         request.getSession().invalidate();
         return "登出";
     }
+
+    @PostMapping(value = "/register")
+    public  String register(  @RequestParam(value = "password",required = false) String password,
+                              @RequestParam(value = "username",required = false) String username,
+                              @RequestParam(value = "email",required = false) String email,
+                              HttpServletRequest request)
+    {
+        if(userRepository.findByName(username) == null)
+        {
+            User user = new User(username,password,email,1);
+            userRepository.saveAndFlush( user);
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+            session.setAttribute("userid",  user.getId());
+            return "注册成功";
+        }
+        else
+        {
+            return"用户名已存在";
+        }
+
+    }
+
+
 }

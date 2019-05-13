@@ -1,12 +1,14 @@
 package com.bookstore.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 public class Book {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ID")
   private long id;
+
   private String name;
   private String author;
   private long stock;

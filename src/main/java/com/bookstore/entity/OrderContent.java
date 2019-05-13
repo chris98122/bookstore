@@ -8,12 +8,15 @@ import java.util.Set;
 @Entity
 public class OrderContent {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ID")
   private long id;
   private double bNum;
 
   @ManyToOne
   @JoinColumn(name = "b_ID")
   private Book book;
+
 
   public Book getBook() {
     return book;

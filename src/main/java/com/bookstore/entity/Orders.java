@@ -1,28 +1,23 @@
 package com.bookstore.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import java.util.Set;
-
+import java.util.List;
 @Entity
 public class Orders {
+
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "ID")
   private long id;
 
   @ManyToOne
@@ -33,15 +28,26 @@ public class Orders {
   private double totPrice;
   private boolean isCart;
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany()
   @JoinColumn(name = "o_ID")
-  private Set <OrderContent> orderContent;
+  private List <OrderContent> orderContent;
 
-  public Set<OrderContent> getOrderContent() {
+  public Orders() {
+  }
+
+  public Orders(User user, Timestamp buydate, double totPrice, boolean isCart, List<OrderContent> orderContent) {
+    this.user = user;
+    this.buydate = buydate;
+    this.totPrice = totPrice;
+    this.isCart = isCart;
+    this.orderContent = orderContent;
+  }
+
+  public List<OrderContent> getOrderContent() {
     return orderContent;
   }
 
-  public void setOrderContent(Set<OrderContent> orderContent) {
+  public void setOrderContent(List<OrderContent> orderContent) {
     this.orderContent = orderContent;
   }
 
@@ -61,14 +67,13 @@ public class Orders {
     this.user = user;
   }
 
-  public java.sql.Timestamp getBuydate() {
+  public Timestamp getBuydate() {
     return buydate;
   }
 
-  public void setBuydate(java.sql.Timestamp buydate) {
+  public void setBuydate(Timestamp buydate) {
     this.buydate = buydate;
   }
-
 
   public double getTotPrice() {
     return totPrice;

@@ -5,19 +5,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.bookstore.entity.Orders;
+import com.bookstore.entity.OrderContent;
 
 import java.util.List;
 @Repository
-public interface OrdersRepository extends JpaRepository<Orders, Long>{
-    List<Orders> findByUser_IdAndIsCartIsFalse(long userid);
-
-    List<Orders> findByUser_IdAndIsCartIsTrue(long userid);
-
+public interface OrderContentRepository extends JpaRepository<OrderContent, Long>{
     @Override
-    default <S extends Orders> S saveAndFlush(S entity) {
+    default <S extends OrderContent> List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
     @Override
-    <S extends Orders> S save(S entity);
+    default <S extends OrderContent> S saveAndFlush(S entity) {
+        return null;
+    }
+
+    @Override
+    <S extends OrderContent> S save(S entity);
 }
