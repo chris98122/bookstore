@@ -16,7 +16,6 @@ public class BookController {
     @Autowired
     private BookRepository bookrepository;
 
-
     @GetMapping(value = "/browse")
     public List<Book> getBooks(){
         return bookrepository.findAll();

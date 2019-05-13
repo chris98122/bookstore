@@ -2,6 +2,8 @@ package com.bookstore.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
+
 @Entity
 public class Book {
   @Id
@@ -79,4 +81,22 @@ public class Book {
     this.detail = detail;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Book book = (Book) o;
+    return id == book.id &&
+            stock == book.stock &&
+            Double.compare(book.price, price) == 0 &&
+            name.equals(book.name) &&
+            author.equals(book.author) &&
+            isbn.equals(book.isbn) &&
+            detail.equals(book.detail);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, author, stock, price, isbn, detail);
+  }
 }

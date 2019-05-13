@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.bookstore.entity.Orders;
+
+import com.bookstore.entity.Book;
 import com.bookstore.entity.OrderContent;
 
 import java.util.List;
@@ -22,4 +24,8 @@ public interface OrderContentRepository extends JpaRepository<OrderContent, Long
 
     @Override
     <S extends OrderContent> S save(S entity);
+    OrderContent findByOIdAndBookIs(long oid,Book b);
+
+    @Override
+    void deleteById(Long aLong);
 }
