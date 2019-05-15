@@ -1,5 +1,7 @@
 package com.bookstore.controller;
+import com.bookstore.entity.Orders;
 import com.bookstore.repository.BookRepository;
+import com.bookstore.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,8 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private OrdersRepository ordersrepository;
 
      @PostMapping(value = "/login")
      public  String login(
@@ -80,7 +84,9 @@ public class UserController {
             userRepository.saveAndFlush( user);
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
-            session.setAttribute("userid",  user.getId());
+            session.setAttribute("userid",   user.getId());
+            Orders order = new Orders(  user,null,0,true,null);
+            ordersrepository.save(order);
             return "注册成功";
         }
         else

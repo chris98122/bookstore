@@ -50,14 +50,7 @@ public class CartController {
         Orders  items = new Orders();
         items =  JSONObject.parseArray(buyitem, Orders.class).get(0);
         Timestamp date = new Timestamp(System.currentTimeMillis());
-
-        List <OrderContent> orderContent = new ArrayList<OrderContent>();
-      for (int i = 0; i < items.getOrderContent().size(); i++) {
-            OrderContent oc = items.getOrderContent().get(i);
-            orderContent.add(oc);
-          orderContentrepository.save(oc);
-      }
-        Orders order = new Orders(items.getUser(),date,items.getTotPrice(),false,orderContent);
+        Orders order = new Orders(items.getUser(),date,items.getTotPrice(),false,items.getOrderContent());
         ordersrepository.save(order);
         return "下单成功，订单号为"+ Long.toString(order.getId());
     }

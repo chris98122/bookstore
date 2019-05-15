@@ -15,7 +15,9 @@ public class ServletConfig {
         logger.info("come to 404 error page");
         return factory -> {
             ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/index.html");
+            ErrorPage error405Page = new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/index.html");
             factory.addErrorPages(error404Page);
+            factory.addErrorPages(error405Page);
         };
     }
     }
