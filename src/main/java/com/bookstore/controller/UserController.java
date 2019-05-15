@@ -5,10 +5,7 @@ import com.bookstore.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
-import java.util.List;
-import java.util.Optional;
-
+import com.bookstore.bean.Password;
 import com.bookstore.repository.UserRepository;
 import com.bookstore.entity.User;
 import com.bookstore.bean.WebResponse;
@@ -42,7 +39,7 @@ public class UserController {
              System.out.println("dont find username");
              return "用户登录失败";
          }
-         else if( user.getPassword().equals(password) ){
+         else if( Password.encode(password).equals(user.getPassword()) ){
              HttpSession session = request.getSession();
              session.setAttribute("username", username);
              session.setAttribute("userid",  user.getId());
@@ -80,7 +77,8 @@ public class UserController {
     {
         if(userRepository.findByName(username) == null)
         {
-            User user = new User(username,password,email,1);
+            String encryted_password = Password.encode(password);
+            User user = new User(username,encryted_password,email,1);
             userRepository.saveAndFlush( user);
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
