@@ -50,6 +50,18 @@ public class CartController {
         Orders  items = new Orders();
         items =  JSONObject.parseArray(buyitem, Orders.class).get(0);
         Timestamp date = new Timestamp(System.currentTimeMillis());
+    //更新bnum
+     for (int i = 0; i < items.getOrderContent().size(); i++) {
+           OrderContent oc = items.getOrderContent().get(i);
+           orderContentrepository.save(oc);
+     }
+     //更新库存
+        for (int i = 0; i < items.getOrderContent().size(); i++) {
+            long buynum =  Math.round(items.getOrderContent().get(i).getbNum());
+            Book b = items.getOrderContent().get(i).getBook();
+            b.setStock(b.getStock()-buynum);
+            bookrepository.save(b);
+        }
         Orders order = new Orders(items.getUser(),date,items.getTotPrice(),false,items.getOrderContent());
         ordersrepository.save(order);
         return "下单成功，订单号为"+ Long.toString(order.getId());
