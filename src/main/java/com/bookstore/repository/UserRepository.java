@@ -19,4 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
     @Override
     <S extends User> S saveAndFlush(S entity);
 
+    @Override
+    <S extends User> List<S> saveAll(Iterable<S> entities);
+
+    List<User> findByIdIsGreaterThan(long i);
+
+
 }

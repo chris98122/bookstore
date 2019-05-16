@@ -21,19 +21,28 @@ public class User {
   private String name;
   private String password;
   private String email;
-  private long isActive;
+  @Column(name = "is_active")
+  private Boolean Active;
 
   public User() {
   }
 
-  public User(String name, String password, String email, long isActive) {
-    this.name = name;
-    this.password = password;
-    this.email = email;
-    this.isActive = isActive;
-  }
+    public Boolean getActive() {
+        return Active;
+    }
 
-  public long getId() {
+    public void setActive(Boolean active) {
+        Active = active;
+    }
+
+    public User(String name, String password, String email, Boolean active) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        Active = active;
+    }
+
+    public long getId() {
     return id;
   }
 
@@ -69,12 +78,5 @@ public class User {
   }
 
 
-  public long getIsActive() {
-    return isActive;
-  }
-
-  public void setIsActive(long isActive) {
-    this.isActive = isActive;
-  }
 
 }

@@ -49,7 +49,7 @@ public class UserController {
              }
              else
              {
-                 if(user.getIsActive() !=1)
+                 if(!user.getActive())
                  {
                      return"您被禁止登录";
                  }
@@ -78,7 +78,7 @@ public class UserController {
         if(userRepository.findByName(username) == null)
         {
             String encryted_password = Password.encode(password);
-            User user = new User(username,encryted_password,email,1);
+            User user = new User(username,encryted_password,email,true);
             userRepository.saveAndFlush( user);
             HttpSession session = request.getSession();
             session.setAttribute("username", username);
