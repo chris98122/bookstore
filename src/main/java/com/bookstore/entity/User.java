@@ -1,16 +1,13 @@
 package com.bookstore.entity;
 
  import javax.annotation.Generated;
-  import javax.persistence.CascadeType;
-  import javax.persistence.Column;
-  import javax.persistence.Entity;
-  import javax.persistence.GeneratedValue;
- import javax.persistence.GenerationType;
+ import javax.persistence.*;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
+ import javax.persistence.Entity;
+ import java.io.Serializable;
+ import java.util.List;
+
 @Entity
 public class User {
   @Id
@@ -24,7 +21,17 @@ public class User {
   @Column(name = "is_active")
   private Boolean Active;
 
-  public User() {
+  private long  spending;
+
+    public long getSpending() {
+        return spending;
+    }
+
+    public void setSpending(long spending) {
+        this.spending = spending;
+    }
+
+    public User() {
   }
 
     public Boolean getActive() {
@@ -76,7 +83,5 @@ public class User {
   public void setEmail(String email) {
     this.email = email;
   }
-
-
 
 }

@@ -1,9 +1,11 @@
 package com.bookstore.controller;
 
 
+import com.bookstore.entity.OrderContent;
 import com.bookstore.entity.Orders;
 import com.bookstore.entity.User;
 import com.bookstore.entity.Book;
+import com.bookstore.repository.OrdersRepository;
 import com.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpSession;
 public class AdminController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private OrdersRepository ordersrepository;
 
 
     @GetMapping(value = "/manageuser")
@@ -36,7 +40,7 @@ public class AdminController {
 //        else return null;
     }
     @PostMapping(value = "/ban_user")
-    public String buy( @RequestParam(value = "userid",required = false)long id,
+    public String BanUser( @RequestParam(value = "userid",required = false)long id,
                        @RequestParam(value = "active",required = false)Boolean active,
                       HttpServletRequest request) {
          System.out.println(id);
@@ -45,6 +49,28 @@ public class AdminController {
            userRepository.saveAndFlush(user);
            return " ";
        }
+    @GetMapping(value = "/statistics_show")
+    public List<Orders> getstatistics( HttpServletRequest request)
+    {
+        return  ordersrepository.findAllByIsCartIsFalse();
+    }
+
+    @GetMapping(value = "/statistics_by_user")
+    public List<User> statistics_by_user(  HttpServletRequest request) {
+        List<User> users = userRepository.findByIdIsGreaterThan(1);
+        for (int i = 0; i < users.size(); i++) {
+            long spending = 0;
+            List<Orders> orders  = ordersrepository.findByUser_IdAndIsCartIsFalse(users.get(i).getId());
+            for (int j = 0; j < orders.size(); j++)
+            {
+                spending += orders.get(j).getTotPrice();
+            }
+            users.get(i).setSpending(spending);
+        }
+        return users;
+    }
+
+
 
 
 }
