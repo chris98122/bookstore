@@ -21,4 +21,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Override
     <S extends Book> S save(S entity);
+
+    @Override
+    <S extends Book> S saveAndFlush(S entity);
 }
