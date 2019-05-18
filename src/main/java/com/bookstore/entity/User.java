@@ -21,7 +21,8 @@ public class User {
   @Column(name = "is_active")
   private Boolean Active;
 
-  private double  spending;
+
+    private double  spending;
 
     public double getSpending() {
         return spending;

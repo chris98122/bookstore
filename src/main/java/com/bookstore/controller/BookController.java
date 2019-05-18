@@ -54,7 +54,15 @@ public class BookController {
     }
     @PostMapping(value = "/onshelf")
     public String onshelf( @RequestParam(value = "name",required = false)String name,
-                                HttpServletRequest request) {
-        return name+"上传成功";
+                           @RequestParam(value = "author",required = false)String author,
+                           @RequestParam(value = "stock",required = false)long stock,
+                           @RequestParam(value = "isbn",required = false)String isbn,
+                           @RequestParam(value = "price",required = false)double  price,
+                           HttpServletRequest request) {
+        Book newbook = new Book( name,   author,   stock,   price,   isbn, true);
+
+        bookrepository.saveAndFlush(newbook );
+        return newbook.getName()+"上传成功";
     }
+
 }

@@ -17,10 +17,13 @@ import javax.servlet.http.HttpServlet;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
@@ -56,8 +59,17 @@ public class AdminController {
     }
 
     @GetMapping(value = "/statistics_by_user")
-    public List<User> statistics_by_user(  HttpServletRequest request) {
-        return  userRepository.findByIdIsGreaterThan(1);
+    public   List<Map>  statistics_by_user(  HttpServletRequest request) {
+        List<User> users = userRepository.findByIdIsGreaterThan(1);
+        List<Map> returnlist =  new ArrayList<Map>();
+
+        for (int i = 0; i < users.size(); i++) {
+            Map<JSONObject, JSONArray> pair = new HashMap<JSONObject, JSONArray>();
+            List<Orders> orders = ordersrepository.findByUser_IdAndIsCartIsFalse(users.get(i).getId());
+            pair.put(JSON.parseObject(JSON.toJSONString(users.get(i))),JSONArray.parseArray(JSON.toJSONString(orders)));
+            returnlist.add(pair);
+        }
+        return returnlist;
     }
 
 

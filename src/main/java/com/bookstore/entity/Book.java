@@ -17,8 +17,21 @@ public class Book {
   private double price;
   private long words;
   private String isbn;
+  private String publisher;
   private Boolean upshelf;
   private String detail;
+
+  public Book() {
+  }
+
+  public Book(String name, String author, long stock, double price, String isbn, Boolean upshelf) {
+    this.name = name;
+    this.author = author;
+    this.stock = stock;
+    this.price = price;
+    this.isbn = isbn;
+    this.upshelf = upshelf;
+  }
 
   public long getWords() {
     return words;
@@ -26,6 +39,14 @@ public class Book {
 
   public void setWords(long words) {
     this.words = words;
+  }
+
+  public String getPublisher() {
+    return publisher;
+  }
+
+  public void setPublisher(String publisher) {
+    this.publisher = publisher;
   }
 
   public Boolean getUpshelf() {
