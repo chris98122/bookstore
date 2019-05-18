@@ -15,9 +15,26 @@ public class Book {
   private String author;
   private long stock;
   private double price;
+  private long words;
   private String isbn;
+  private Boolean upshelf;
   private String detail;
 
+  public long getWords() {
+    return words;
+  }
+
+  public void setWords(long words) {
+    this.words = words;
+  }
+
+  public Boolean getUpshelf() {
+    return upshelf;
+  }
+
+  public void setUpshelf(Boolean upshelf) {
+    this.upshelf = upshelf;
+  }
 
   public long getId() {
     return id;
@@ -87,12 +104,7 @@ public class Book {
     if (o == null || getClass() != o.getClass()) return false;
     Book book = (Book) o;
     return id == book.id &&
-            stock == book.stock &&
-            Double.compare(book.price, price) == 0 &&
-            name.equals(book.name) &&
-            author.equals(book.author) &&
-            isbn.equals(book.isbn) &&
-            detail.equals(book.detail);
+            isbn.equals(book.isbn);
   }
 
   @Override

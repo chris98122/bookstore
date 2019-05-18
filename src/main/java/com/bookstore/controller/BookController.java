@@ -24,12 +24,37 @@ public class BookController {
     }
 
     @PostMapping(value = "/update_stock")
-    public String BanUser( @RequestParam(value = "bid",required = false)long id,
+    public String update_stock( @RequestParam(value = "bid",required = false)long id,
                            @RequestParam(value = "stock",required = false)long stock,
                            HttpServletRequest request) {
         Book book = bookrepository.getBookByBookId(id);
         book.setStock(stock);
         bookrepository.saveAndFlush(book);
         return "修改"+book.getName()+"的库存为"+book.getStock();
+    }
+
+    @PostMapping(value = "/update_price")
+    public String update_price( @RequestParam(value = "bid",required = false)long id,
+                           @RequestParam(value = "price",required = false)double price,
+                           HttpServletRequest request) {
+        Book book = bookrepository.getBookByBookId(id);
+        book.setPrice(price);
+        bookrepository.saveAndFlush(book);
+        return "修改"+book.getName()+"的价格为"+book.getPrice();
+    }
+    @PostMapping(value = "/update_shelf")
+    public String update_shelf( @RequestParam(value = "bid",required = false)long id,
+                                @RequestParam(value = "upshelf",required = false)Boolean upshelf,
+                                HttpServletRequest request) {
+        Book book = bookrepository.getBookByBookId(id);
+        book.setUpshelf(upshelf);
+        bookrepository.saveAndFlush(book);
+        String a[] = {"下架","上架"};
+        return "修改"+book.getName()+ a[book.getUpshelf() ?  1 : 0];
+    }
+    @PostMapping(value = "/onshelf")
+    public String onshelf( @RequestParam(value = "name",required = false)String name,
+                                HttpServletRequest request) {
+        return name+"上传成功";
     }
 }

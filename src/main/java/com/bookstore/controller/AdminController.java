@@ -57,17 +57,7 @@ public class AdminController {
 
     @GetMapping(value = "/statistics_by_user")
     public List<User> statistics_by_user(  HttpServletRequest request) {
-        List<User> users = userRepository.findByIdIsGreaterThan(1);
-        for (int i = 0; i < users.size(); i++) {
-            long spending = 0;
-            List<Orders> orders  = ordersrepository.findByUser_IdAndIsCartIsFalse(users.get(i).getId());
-            for (int j = 0; j < orders.size(); j++)
-            {
-                spending += orders.get(j).getTotPrice();
-            }
-            users.get(i).setSpending(spending);
-        }
-        return users;
+        return  userRepository.findByIdIsGreaterThan(1);
     }
 
 

@@ -21,13 +21,13 @@ public class User {
   @Column(name = "is_active")
   private Boolean Active;
 
-  private long  spending;
+  private double  spending;
 
-    public long getSpending() {
+    public double getSpending() {
         return spending;
     }
 
-    public void setSpending(long spending) {
+    public void setSpending(double spending) {
         this.spending = spending;
     }
 

@@ -13,6 +13,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findAll();
 
+    List<Book> findAllByUpshelfIsTrue();
+
+
     @Query("SELECT b from Book b")
     List<Book> getAll();
 

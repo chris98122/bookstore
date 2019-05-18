@@ -12,7 +12,17 @@ public class OrderContent {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID")
   private long id;
-  private double bNum;
+  private long bNum;
+
+  private double price;
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
 
   @ManyToOne
   @JoinColumn(name = "b_ID")
@@ -21,7 +31,7 @@ public class OrderContent {
   public OrderContent() {
   }
 
-  public OrderContent(double bNum, Book book) {
+  public OrderContent(long bNum, Book book) {
     this.bNum = bNum;
     this.book = book;
   }
@@ -56,7 +66,7 @@ public class OrderContent {
     return bNum;
   }
 
-  public void setbNum(double bNum) {
+  public void setbNum(long bNum) {
     this.bNum = bNum;
   }
 
