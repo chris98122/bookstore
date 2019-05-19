@@ -12,6 +12,9 @@ import java.util.Collections;
 
 import java.util.Set;
 import java.util.List;
+
+import java.io.Serializable;
+import com.alibaba.fastjson.annotation.JSONField;
 @Entity
 public class Orders {
 
@@ -24,6 +27,7 @@ public class Orders {
   @JoinColumn(name = "u_ID")
   private User user;
 
+  @JSONField(format = "yyyy-MM-dd HH:mm:ss")
   private java.sql.Timestamp buydate;
   private double totPrice;
   private boolean isCart;

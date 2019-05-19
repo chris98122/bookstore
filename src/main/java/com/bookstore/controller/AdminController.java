@@ -19,10 +19,17 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
+import java.util.Date;
+
+import java.util.*;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
@@ -72,6 +79,26 @@ public class AdminController {
         return returnlist;
     }
 
+    @GetMapping(value = "/statistics_by_day")
+    public   List<Orders> statistics_by_day(HttpServletRequest request) {
+        try
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+            String dateString= sdf.format(new Date());
+            Date date = sdf.parse(dateString);
+            System.out.println(date);
+            Timestamp end = new Timestamp(date.getTime()+1000*60*60*24);
+            long sub = 6*1000*60*60*24;
+            Timestamp start = new Timestamp(date.getTime()-sub);
+            return ordersrepository.findAllByBuydateBetween(start,end);
+
+        }
+        catch (ParseException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
 
 

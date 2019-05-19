@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.bookstore.entity.Orders;
 
+import java.sql.Timestamp;
 import java.util.List;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long>{
@@ -22,4 +23,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long>{
 
     @Override
     <S extends Orders> S save(S entity);
+
+
+    List<Orders> findAllByBuydateBetween(Timestamp a, Timestamp b);
 }
