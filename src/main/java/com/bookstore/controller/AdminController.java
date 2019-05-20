@@ -7,6 +7,7 @@ import com.bookstore.entity.User;
 import com.bookstore.entity.Book;
 import com.bookstore.repository.OrdersRepository;
 import com.bookstore.repository.UserRepository;
+import com.bookstore.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,9 @@ import javax.servlet.http.HttpSession;
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
 public class AdminController {
+    @Autowired
+    private AdminService adminservice;
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -67,37 +71,12 @@ public class AdminController {
 
     @GetMapping(value = "/statistics_by_user")
     public   List<Map>  statistics_by_user(  HttpServletRequest request) {
-        List<User> users = userRepository.findByIdIsGreaterThan(1);
-        List<Map> returnlist =  new ArrayList<Map>();
-
-        for (int i = 0; i < users.size(); i++) {
-            Map<JSONObject, JSONArray> pair = new HashMap<JSONObject, JSONArray>();
-            List<Orders> orders = ordersrepository.findByUser_IdAndIsCartIsFalse(users.get(i).getId());
-            pair.put(JSON.parseObject(JSON.toJSONString(users.get(i))),JSONArray.parseArray(JSON.toJSONString(orders)));
-            returnlist.add(pair);
-        }
-        return returnlist;
+        return adminservice.statistics_by_user(request);
     }
 
     @GetMapping(value = "/statistics_by_day")
     public   List<Orders> statistics_by_day(HttpServletRequest request) {
-        try
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
-            String dateString= sdf.format(new Date());
-            Date date = sdf.parse(dateString);
-            System.out.println(date);
-            Timestamp end = new Timestamp(date.getTime()+1000*60*60*24);
-            long sub = 6*1000*60*60*24;
-            Timestamp start = new Timestamp(date.getTime()-sub);
-            return ordersrepository.findAllByBuydateBetween(start,end);
-
-        }
-        catch (ParseException e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return null;
+        return adminservice.statistics_by_day(request);
     }
 
 

@@ -1,30 +1,16 @@
 package com.bookstore.controller;
-import com.bookstore.entity.Orders;
-import com.bookstore.repository.BookRepository;
-import com.bookstore.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.bookstore.bean.Password;
-import com.bookstore.repository.UserRepository;
-import com.bookstore.entity.User;
-import com.bookstore.bean.WebResponse;
-import com.alibaba.fastjson.JSON;
+import com.bookstore.service.UserService;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServlet;
 
-import java.util.HashMap;
-import javax.servlet.http.HttpSession;
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private OrdersRepository ordersrepository;
+    private UserService userservice;
 
      @PostMapping(value = "/login")
      public  String login(
@@ -33,40 +19,13 @@ public class UserController {
               HttpServletRequest request
             )
      {
-         User user= userRepository.findByName(username);
-         if(userRepository.findByName(username) == null)
-         {
-             System.out.println("dont find username");
-             return "用户登录失败";
-         }
-         else if( Password.encode(password).equals(user.getPassword()) ){
-             HttpSession session = request.getSession();
-             session.setAttribute("username", username);
-             session.setAttribute("userid",  user.getId());
-             if( user.getId() == 1)
-             {
-                 return"管理员登录成功";
-             }
-             else
-             {
-                 if(!user.getActive())
-                 {
-                     return"您被禁止登录";
-                 }
-                 return"用户登录成功";
-             }
-
-         }
-         return " ";
+         return userservice.login(password,username,request);
      }
 
     @PostMapping(value = "/logout")
     public  String logout(  HttpServletRequest request)
     {
-        request.getSession().removeAttribute("username");
-        request.getSession().removeAttribute("userid");
-        request.getSession().invalidate();
-        return "登出";
+        return userservice.logout(request);
     }
 
     @PostMapping(value = "/register")
@@ -75,23 +34,7 @@ public class UserController {
                               @RequestParam(value = "email",required = false) String email,
                               HttpServletRequest request)
     {
-        if(userRepository.findByName(username) == null)
-        {
-            String encryted_password = Password.encode(password);
-            User user = new User(username,encryted_password,email,true);
-            userRepository.saveAndFlush( user);
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            session.setAttribute("userid",   user.getId());
-            Orders order = new Orders(  user,null,0,true,null);
-            ordersrepository.save(order);
-            return "注册成功";
-        }
-        else
-        {
-            return"用户名已存在";
-        }
-
+        return userservice.register(password,username,email,request);
     }
 
 

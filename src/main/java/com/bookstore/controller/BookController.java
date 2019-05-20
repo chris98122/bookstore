@@ -1,6 +1,7 @@
 package com.bookstore.controller;
 
 import com.bookstore.entity.Book;
+import com.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 import com.bookstore.repository.BookRepository;
-import com.bookstore.entity.Book;
+import com.bookstore.service.BookService;
 
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
 public class BookController {
+
     @Autowired
     private BookRepository bookrepository;
+
+    @Autowired
+    private BookService bookservice;
 
     @GetMapping(value = "/book")
     public List<Book> getBooks(){
@@ -37,10 +42,7 @@ public class BookController {
     public String update_price( @RequestParam(value = "bid",required = false)long id,
                            @RequestParam(value = "price",required = false)double price,
                            HttpServletRequest request) {
-        Book book = bookrepository.getBookByBookId(id);
-        book.setPrice(price);
-        bookrepository.saveAndFlush(book);
-        return "修改"+book.getName()+"的价格为"+book.getPrice();
+        return bookservice.update_price(id,price,request);
     }
     @PostMapping(value = "/update_shelf")
     public String update_shelf( @RequestParam(value = "bid",required = false)long id,
