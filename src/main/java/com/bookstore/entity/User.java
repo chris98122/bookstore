@@ -1,25 +1,19 @@
 package com.bookstore.entity;
 
- import javax.annotation.Generated;
- import javax.persistence.*;
-
-
- import javax.persistence.Entity;
- import java.io.Serializable;
- import java.util.List;
+import javax.persistence.*;
 
 @Entity
 public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "ID")
-  private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private long id;
 
-  private String name;
-  private String password;
-  private String email;
-  @Column(name = "is_active")
-  private Boolean Active;
+    private String name;
+    private String password;
+    private String email;
+    @Column(name = "is_active")
+    private Boolean Active;
 
 
     private double  spending;
@@ -33,7 +27,7 @@ public class User {
     }
 
     public User() {
-  }
+    }
 
     public Boolean getActive() {
         return Active;
@@ -51,38 +45,38 @@ public class User {
     }
 
     public long getId() {
-    return id;
-  }
+        return id;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
 
-  public String getPassword() {
-    return password;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
-  public String getEmail() {
-    return email;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }

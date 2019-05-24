@@ -2,9 +2,7 @@ package com.bookstore.entity;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class OrderContent {

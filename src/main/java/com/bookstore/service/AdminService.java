@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bookstore.entity.Orders;
 import com.bookstore.entity.User;
-import com.bookstore.repository.BookRepository;
 import com.bookstore.repository.OrdersRepository;
 import com.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,8 +19,6 @@ import java.util.*;
 
 @Service
 public class AdminService {
-
-
     @Autowired
     private OrdersRepository ordersrepository;
 
@@ -47,18 +45,37 @@ public class AdminService {
         return null;
     }
 
-        public   List<Map>  statistics_by_user(HttpServletRequest request)
+    public   List<Map>  statistics_by_user(HttpServletRequest request)
 
-        {
-            List<User> users = userRepository.findByIdIsGreaterThan(1);
-            List<Map> returnlist =  new ArrayList<Map>();
+    {
+        List<User> users = userRepository.findByIdIsGreaterThan(1);
+        List<Map> returnlist =  new ArrayList<Map>();
 
-            for (int i = 0; i < users.size(); i++) {
-                Map<JSONObject, JSONArray> pair = new HashMap<JSONObject, JSONArray>();
-                List<Orders> orders = ordersrepository.findByUser_IdAndIsCartIsFalse(users.get(i).getId());
-                pair.put(JSON.parseObject(JSON.toJSONString(users.get(i))),JSONArray.parseArray(JSON.toJSONString(orders)));
-                returnlist.add(pair);
-            }
-            return returnlist;
+        for (int i = 0; i < users.size(); i++) {
+            Map<JSONObject, JSONArray> pair = new HashMap<JSONObject, JSONArray>();
+            List<Orders> orders = ordersrepository.findByUser_IdAndIsCartIsFalse(users.get(i).getId());
+            pair.put(JSON.parseObject(JSON.toJSONString(users.get(i))),JSONArray.parseArray(JSON.toJSONString(orders)));
+            returnlist.add(pair);
         }
+        return returnlist;
+    }
+
+
+    public List<User> get_users(HttpServletRequest request)
+    {
+
+        HttpSession session = request.getSession();
+        long userid = (long) session.getAttribute("userid");
+        if( userid == 1)
+            return userRepository.findByIdIsGreaterThan(1);
+        else return null;
+    }
+
+    public String BanUser( long id,Boolean active,  HttpServletRequest request) {
+        System.out.println(id);
+        User user = userRepository.findById(id);
+        user.setActive(active);
+        userRepository.saveAndFlush(user);
+        return user.getName()+"的状态改为"+user.getActive();
+    }
 }

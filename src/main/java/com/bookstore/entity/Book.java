@@ -24,13 +24,18 @@ public class Book {
   public Book() {
   }
 
-  public Book(String name, String author, long stock, double price, String isbn, Boolean upshelf) {
+  public Book(String name, String author, long stock,
+              double price, String isbn, Boolean upshelf,String detail,
+              String publisher, long words) {
     this.name = name;
     this.author = author;
     this.stock = stock;
     this.price = price;
     this.isbn = isbn;
     this.upshelf = upshelf;
+    this.detail = detail;
+    this.publisher =publisher;
+    this.words = words;
   }
 
   public long getWords() {

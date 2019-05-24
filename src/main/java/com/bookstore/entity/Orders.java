@@ -1,20 +1,10 @@
 package com.bookstore.entity;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import java.util.Set;
-import java.util.List;
-
-import java.io.Serializable;
 import com.alibaba.fastjson.annotation.JSONField;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
 @Entity
 public class Orders {
 

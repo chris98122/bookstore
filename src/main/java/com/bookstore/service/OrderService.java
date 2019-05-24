@@ -64,52 +64,52 @@ public class OrderService {
         Orders order = new Orders(items.getUser(),date,items.getTotPrice(),false,items.getOrderContent());
         ordersrepository.save(order);
         return "下单成功，订单号为"+ Long.toString(order.getId());}
-        public String move_in(long b_id, HttpServletRequest request)
+    public String move_in(long b_id, HttpServletRequest request)
+    {
+        HttpSession session = request.getSession();
+
+        long userid = (long) session.getAttribute("userid");
+
+        long oid = ordersrepository.findByUser_IdAndIsCartIsTrue(userid).get(0).getId();
+        Orders order = ordersrepository.getOne(oid);
+
+        OrderContent oc = new OrderContent(1,bookrepository.getBookByBookId(b_id));
+        oc.setoId(oid);
+
+        if(order.getOrderContent().contains(oc))
         {
-            HttpSession session = request.getSession();
-
-            long userid = (long) session.getAttribute("userid");
-
-            long oid = ordersrepository.findByUser_IdAndIsCartIsTrue(userid).get(0).getId();
-            Orders order = ordersrepository.getOne(oid);
-
-            OrderContent oc = new OrderContent(1,bookrepository.getBookByBookId(b_id));
-            oc.setoId(oid);
-
-            if(order.getOrderContent().contains(oc))
-            {
-                return bookrepository.getBookByBookId(b_id).getName()+"已经在购物车";
-            }
-            orderContentrepository.save(oc);
-
-            return bookrepository.getBookByBookId(b_id).getName()+"加入购物车成功";
+            return bookrepository.getBookByBookId(b_id).getName()+"已经在购物车";
         }
-        public String move_out(long b_id,   HttpServletRequest request)
-        {
-            HttpSession session = request.getSession();
+        orderContentrepository.save(oc);
 
-            long userid = (long) session.getAttribute("userid");
-            long oid = ordersrepository.findByUser_IdAndIsCartIsTrue(userid).get(0).getId();
-            OrderContent oc =  orderContentrepository.findByOIdAndBookIs(oid ,bookrepository.getBookByBookId(b_id));
-            orderContentrepository.delete(oc);
-            return bookrepository.getBookByBookId(b_id).getName()+"移出购物车成功";
-        }
+        return bookrepository.getBookByBookId(b_id).getName()+"加入购物车成功";
+    }
+    public String move_out(long b_id,   HttpServletRequest request)
+    {
+        HttpSession session = request.getSession();
 
-        public List<Orders> cart_show(HttpServletRequest request)
-        {
+        long userid = (long) session.getAttribute("userid");
+        long oid = ordersrepository.findByUser_IdAndIsCartIsTrue(userid).get(0).getId();
+        OrderContent oc =  orderContentrepository.findByOIdAndBookIs(oid ,bookrepository.getBookByBookId(b_id));
+        orderContentrepository.delete(oc);
+        return bookrepository.getBookByBookId(b_id).getName()+"移出购物车成功";
+    }
 
-            HttpSession session = request.getSession();
-            long userid = (long) session.getAttribute("userid");
+    public List<Orders> cart_show(HttpServletRequest request)
+    {
 
-            return ordersrepository.findByUser_IdAndIsCartIsTrue(userid);
-        }
+        HttpSession session = request.getSession();
+        long userid = (long) session.getAttribute("userid");
 
-        public  List<Orders> orders_show( HttpServletRequest request)
-        {
-            HttpSession session = request.getSession();
-            long userid = (long) session.getAttribute("userid");
+        return ordersrepository.findByUser_IdAndIsCartIsTrue(userid);
+    }
 
-            return ordersrepository.findByUser_IdAndIsCartIsFalse(userid);
-        }
+    public  List<Orders> orders_show( HttpServletRequest request)
+    {
+        HttpSession session = request.getSession();
+        long userid = (long) session.getAttribute("userid");
+
+        return ordersrepository.findByUser_IdAndIsCartIsFalse(userid);
+    }
 
 }
