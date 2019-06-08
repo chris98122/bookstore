@@ -50,14 +50,6 @@ public void after() throws Exception {
 */ 
 @Test
 public void testGetId() throws Exception {
-    System.out.println("!!!");
-
-
-    Comment c = repo.findById(1);
-    System.out.println(c.getContent());
-
-
-//TODO: Test goes here... 
 } 
 
 /** 

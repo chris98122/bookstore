@@ -1,8 +1,11 @@
 package com.bookstore.controller;
 
 import com.bookstore.entity.Book;
+import com.bookstore.entity.Comment;
 import com.bookstore.repository.BookRepository;
 import com.bookstore.service.BookService;
+
+import com.bookstore.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,8 @@ public class BookController {
 
     @Autowired
     private BookRepository bookrepository;
+    @Autowired
+    private  CommentService commentservice;
 
     @Autowired
     private BookService bookservice;
@@ -54,6 +59,19 @@ public class BookController {
                            @RequestParam(value = "words",required = false)long words,
                            HttpServletRequest request) {
         return bookservice.upshelf(name,author,stock,isbn,price,detail,publisher,words,request);
+    }
+
+    @PostMapping(value = "/comment")
+    public List<Comment> get_comment(@RequestParam(value = "book_id",required = false)long book_id,
+                                     HttpServletRequest request) {
+
+        return commentservice.get_comment(book_id,request);
+    }
+    @PostMapping(value = "/get_url")
+    public String get_url(@RequestParam(value = "book_id",required = false)long book_id,
+                                     HttpServletRequest request) {
+
+        return bookservice.get_url(book_id,request);
     }
 
 }

@@ -14,17 +14,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @ToString
 public class Comment {
+
     @Id
-    private int id;
+    public String id;
+
+    private Long bookid;
+    private Long userid;
+
     private String content;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getContent() {
         return content;
@@ -34,8 +31,25 @@ public class Comment {
         this.content = content;
     }
 
-    public Comment(int id, String content) {
-        this.id = id;
+    public Long getBookid() {
+        return bookid;
+    }
+
+    public void setBookid(Long bookid) {
+        this.bookid = bookid;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public Comment(Long bookid, Long userid, String content) {
+        this.bookid = bookid;
+        this.userid = userid;
         this.content = content;
     }
 }

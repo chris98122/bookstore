@@ -2,6 +2,8 @@ package com.bookstore.service;
 
 import com.bookstore.entity.Book;
 import com.bookstore.repository.BookRepository;
+
+import com.bookstore.repository.CoverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,10 @@ public class BookService {
 
     @Autowired
     private BookRepository bookrepository;
+
+    @Autowired
+    private CoverRepository coverrepository;
+
     public String update_price(long id,double price,    HttpServletRequest request)
     {
         Book book = bookrepository.getBookByBookId(id);
@@ -47,4 +53,10 @@ public class BookService {
         book.setStock(stock);
         bookrepository.saveAndFlush(book);
         return "修改"+book.getName()+"的库存为"+book.getStock();}
+
+
+        public String get_url(long book_id, HttpServletRequest request)
+        {
+            return coverrepository.findByBookid( book_id).getUrl();
+        }
 }

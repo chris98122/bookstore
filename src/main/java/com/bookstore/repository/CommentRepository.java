@@ -18,4 +18,6 @@ public interface CommentRepository extends MongoRepository<Comment, Integer>{
     <S extends Comment> S save(S entity);
 
     Comment findById(int i);
+
+    List<Comment> findByBookid(Long book_id);
 }
